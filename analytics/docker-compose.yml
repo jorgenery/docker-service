@@ -1,0 +1,41 @@
+version: "3.8"
+
+networks:
+  public_net:
+    external: true
+  internal_net:
+    external: true
+
+services:
+  # --- BUSINESS INTELLIGENCE & ANALYTICS ---
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    restart: unless-stopped
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: ${POSTGRES_DB:-metabase}
+      MB_DB_PORT: 5432
+      MB_DB_USER: ${POSTGRES_USER:-postgres}
+      MB_DB_PASS: ${POSTGRES_PASSWORD:-postgres}
+      MB_DB_HOST: postgresql
+      MB_ADMIN_EMAIL: ${METABASE_ADMIN_EMAIL:-admin@datareview.com.br}
+      MB_ADMIN_PASSWORD: ${METABASE_ADMIN_PASSWORD:-metabase123}
+      MB_JAVA_TIMEZONE: America/Sao_Paulo
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/metabase:/metabase-data
+    networks:
+      - public_net
+      - internal_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metabase.rule=Host(`${METABASE_HOST:-metabase.exa\
+        mple.com}`)"
+      - "traefik.http.routers.metabase.entrypoints=websecure"
+      - "traefik.http.routers.metabase.tls.certresolver=letsencrypt"
+      - "traefik.http.services.metabase.loadbalancer.server.port=3000"
+    depends_on:
+      - postgresql
+    ports:
+      - "3000:3000"

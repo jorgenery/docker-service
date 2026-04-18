@@ -1,0 +1,68 @@
+version: "3.8"
+
+networks:
+  internal_net:
+    external: true
+
+services:
+  # --- DATABASE RELACIONAL ---
+  postgresql:
+    image: postgres:16-alpine
+    container_name: postgresql
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_INITDB_ARGS: "--locale=pt_BR.UTF-8"
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./backups:/backups
+    networks:
+      - internal_net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  # --- CACHE & MESSAGE BROKER ---
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis123}
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - internal_net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "6379:6379"
+  # --- NOSQL DATABASE ---
+  mongodb:
+    image: mongo:7-jammy
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-mongo123}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-maindb}
+    volumes:
+      - ./data/mongodb:/data/db
+      - ./backups:/backups
+    networks:
+      - internal_net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "27017:27017"

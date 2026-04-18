@@ -1,0 +1,91 @@
+version: "3.8"
+
+networks:
+  public_net:
+    external: true
+  internal_net:
+    external: true
+
+services:
+  # --- DATA SCIENCE IDE ---
+  jupyterlab:
+    image: jupyter/scipy-notebook:latest
+    container_name: jupyterlab
+    restart: unless-stopped
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-jupyter123}
+      GRANT_SUDO: "yes"
+      NB_UID: 1000
+      NB_GID: 100
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/jupyter:/home/jovyan/work
+      # Acesso às DAGs do Airflow
+      - ../data-science/data/airflow/dags:/home/jovyan/airflow-dags:ro
+      - ../data-science/data/airflow/logs:/home/jovyan/airflow-logs:ro
+    networks:
+      - public_net
+      - internal_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jupyterlab.rule=Host(`${JUPYTER_HOST:-jupyter.dat\
+        areview.com.br}`)"
+      - "traefik.http.routers.jupyterlab.entrypoints=websecure"
+      - "traefik.http.routers.jupyterlab.tls.certresolver=letsencrypt"
+      - "traefik.http.services.jupyterlab.loadbalancer.server.port=8888"
+    ports:
+      - "8888:8888"
+
+  # --- WORKFLOW ORCHESTRATION ---
+  airflow-webserver:
+    image: apache/airflow:2.8.1-python3.11
+    container_name: airflow-webserver
+    restart: unless-stopped
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgresql:5432/${POSTGRES_DB:-airflow}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_SECRET_KEY:-airflow-secret-key-123}
+      AIRFLOW__WEBSERVER__WEB_SERVER_HOST: "0.0.0.0"
+      AIRFLOW__WEBSERVER__WEB_SERVER_PORT: 8080
+      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 30
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/airflow/dags:/opt/airflow/dags
+      - ./data/airflow/logs:/opt/airflow/logs
+      - ./data/airflow/plugins:/opt/airflow/plugins
+    networks:
+      - public_net
+      - internal_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.airflow.rule=Host(`${AIRFLOW_HOST:-airflow.datare\
+        view.com.br}`)"
+      - "traefik.http.routers.airflow.entrypoints=websecure"
+      - "traefik.http.routers.airflow.tls.certresolver=letsencrypt"
+      - "traefik.http.services.airflow.loadbalancer.server.port=8080"
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  airflow-scheduler:
+    image: apache/airflow:2.8.1-python3.11
+    container_name: airflow-scheduler
+    restart: unless-stopped
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgresql:5432/${POSTGRES_DB:-airflow}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/airflow/dags:/opt/airflow/dags
+      - ./data/airflow/logs:/opt/airflow/logs
+      - ./data/airflow/plugins:/opt/airflow/plugins
+    networks:
+      - internal_net
+    command: scheduler

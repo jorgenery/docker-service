@@ -1,0 +1,61 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'traefik'
+    static_configs:
+      - targets: ['traefik:8080']
+
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgresql:9187']
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:9121']
+
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb:9216']
+
+  - job_name: 'n8n'
+    static_configs:
+      - targets: ['n8n:5678']
+
+  - job_name: 'metabase'
+    static_configs:
+      - targets: ['metabase:3000']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+
+  - job_name: 'airflow-webserver'
+    static_configs:
+      - targets: ['airflow-webserver:8793']
+
+  - job_name: 'jupyterlab'
+    static_configs:
+      - targets: ['jupyterlab:8888']
+
+  - job_name: 'ollama'
+    static_configs:
+      - targets: ['ollama:11434']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']

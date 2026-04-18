@@ -1,0 +1,26 @@
+version: "3.8"
+
+# ========================================
+# ORQUESTRAÇÃO PRINCIPAL DE CONTAINERS
+# ========================================
+# Este arquivo coordena todos os serviços
+# Use: docker-compose -f docker-compose.yml -f core/docker-compose.yml -f database/docker-compose.yml ... up -d
+
+networks:
+  public_net:
+    driver: bridge
+    name: public_net
+  internal_net:
+    driver: bridge
+    name: internal_net
+
+# Incluir as composições dos serviços:
+# docker-compose -f docker-compose.yml \
+#   -f core/docker-compose.yml \
+#   -f database/docker-compose.yml \
+#   -f automation/docker-compose.yml \
+#   -f analytics/docker-compose.yml \
+#   -f ai/docker-compose.yml \
+#   -f apps/docker-compose.yml \
+#   -f monitoring/docker-compose.yml \
+#   up -d

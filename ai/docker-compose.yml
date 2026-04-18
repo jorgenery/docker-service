@@ -1,0 +1,29 @@
+version: "3.8"
+
+networks:
+  internal_net:
+    external: true
+
+services:
+  # --- LOCAL LLM INFERENCE ---
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./data/ollama:/root/.ollama
+    networks:
+      - internal_net
+    ports:
+      - "11434:11434"
+    # Para GPU (descomente se tiver NVIDIA)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]

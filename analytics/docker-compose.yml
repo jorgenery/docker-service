@@ -35,7 +35,5 @@ services:
       - "traefik.http.routers.metabase.entrypoints=websecure"
       - "traefik.http.routers.metabase.tls.certresolver=letsencrypt"
       - "traefik.http.services.metabase.loadbalancer.server.port=3000"
-    depends_on:
-      - postgresql
     ports:
       - "3000:3000"

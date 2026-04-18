@@ -8,8 +8,9 @@ certificatesResolvers:
   letsencrypt:
     acme:
       email: nery.informatica@gmail.com
-      storage: acme.json
+      storage: /acme.json
       caServer: https://acme-v02.api.letsencrypt.org/directory
+      tlsChallenge: {}
       httpChallenge:
         entryPoint: web
 

@@ -16,8 +16,7 @@ services:
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--certificatesresolvers.letsencrypt.acme.email=nery.informatica@gmail.\
-        com"
+      - "--certificatesresolvers.letsencrypt.acme.email=${EMAILSECURE}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--entrypoints.web.address=:80"

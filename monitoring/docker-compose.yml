@@ -25,8 +25,7 @@ services:
       - internal_net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.datareview.com.b\
-        r`)"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMINIO}`)"
       - "traefik.http.routers.prometheus.entrypoints=websecure"
       - "traefik.http.routers.prometheus.tls.certresolver=letsencrypt"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
@@ -67,7 +66,7 @@ services:
       - internal_net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`monitor.datareview.com.br`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMINIO}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"

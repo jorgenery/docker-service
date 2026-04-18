@@ -16,13 +16,17 @@ services:
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.file.filename=/traefik.yml"
+      - "--certificatesresolvers.letsencrypt.acme.email=nery.informatica@gmail.\
+        com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls=true"
       - "--log.level=INFO"
       - "--accesslog=true"
       - "--metrics.prometheus=true"
+      # - "--providers.file.filename=/traefik.yml"
       # - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       # - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       # - "--entrypoints.web.http.redirections.entrypoint.permanent=true"

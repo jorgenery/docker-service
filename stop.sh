@@ -21,7 +21,7 @@ stop_service() {
     local compose_file=$2
 
     echo -e "${YELLOW}Parando $service_name...${NC}"
-    if docker-compose -f "$compose_file" down 2>/dev/null; then
+    if docker-compose --env-file .env -f "$compose_file" down 2>/dev/null; then
         echo -e "${GREEN}✅ $service_name parado com sucesso${NC}"
     else
         echo -e "${RED}❌ Erro ao parar $service_name (continuando...)${NC}"

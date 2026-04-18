@@ -7,6 +7,16 @@
 
 set -e
 
+# Carregar variáveis de ambiente
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+else
+    echo "❌ Arquivo .env não encontrado!"
+    exit 1
+fi
+
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="./database/backups"
 DB_NAME=${POSTGRES_DB:-maindb}

@@ -7,6 +7,16 @@
 
 set -e
 
+# Carregar variáveis de ambiente
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+else
+    echo "❌ Arquivo .env não encontrado!"
+    exit 1
+fi
+
 if [ -z "$1" ]; then
     echo "❌ Uso: ./restore.sh <arquivo_backup.sql>"
     echo ""

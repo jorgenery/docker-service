@@ -54,7 +54,7 @@ services:
       - internal_net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`painel.${DOMINIO}`)"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMINIO}`)"
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.tls=true"
       - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"

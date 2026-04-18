@@ -16,17 +16,13 @@ services:
     command:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/traefik.yml"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.websecure.http.tls=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=${EMAILSECURE}"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
-      # Observability 
       - "--log.level=INFO"
       - "--accesslog=true"
       - "--metrics.prometheus=true"
@@ -36,6 +32,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./proxy/acme.json:/acme.json
+      - ./traefik.yml:/traefik.yml:ro
       - ./proxy/dynamic:/dynamic:ro
     networks:
       - public_net

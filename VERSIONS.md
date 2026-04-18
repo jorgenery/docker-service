@@ -35,7 +35,7 @@
 
 | Serviço | Imagem | Versão | Porta | Descrição |
 |---------|--------|--------|-------|-----------|
-| **n8n** | n8n | latest | 5678 | Automação de workflows |
+| **n8n** | n8nio/n8n | latest | 5678 | Automação de workflows |
 
 ### Analytics Services
 
@@ -53,7 +53,7 @@
 
 | Serviço | Imagem | Versão | Porta | Descrição |
 |---------|--------|--------|-------|-----------|
-| **OpenClaw** | openclaw | latest | 3001 | Aplicação customizada |
+| **OpenClaw** | nginx | alpine | 3001 | Aplicação customizada |
 
 ### Monitoring Services
 

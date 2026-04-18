@@ -53,7 +53,7 @@
 
 | Serviço | Imagem | Versão | Porta | Descrição |
 |---------|--------|--------|-------|-----------|
-| **OpenClaw** | nginx | alpine | 3001 | Aplicação customizada |
+| **OpenClaw** | alpine/openclaw | latest | 3001 | Aplicação customizada |
 
 ### Monitoring Services
 
@@ -64,7 +64,7 @@
 | **Promtail** | grafana/promtail | latest | 9080 | Coletor de logs |
 | **Grafana** | grafana/grafana | latest | 3000 | Visualização de métricas |
 | **Node Exporter** | prom/node-exporter | latest | 9100 | Métricas do sistema host |
-| **cAdvisor** | gcr.io/cadvisor/cadvisor | latest | 8080 | Métricas dos containers |
+| **cAdvisor** | gcr.io/cadvisor/cadvisor | latest | 8081 | Métricas dos containers |
 
 ---
 

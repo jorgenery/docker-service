@@ -9,7 +9,7 @@ networks:
 services:
   # --- CUSTOM APPLICATIONS ---
   openclaw:
-    image: nginx:alpine
+    image: alpine/openclaw:latest
     container_name: openclaw
     restart: unless-stopped
     environment:

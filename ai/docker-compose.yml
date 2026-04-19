@@ -17,8 +17,7 @@ services:
       - ./data/ollama:/root/.ollama
     networks:
       - internal_net
-    ports:
-      - "11434:11434"
+    # ports removidas para segurança - acesso apenas interno via rede Docker
     # Para GPU (descomente se tiver NVIDIA)
     # deploy:
     #   resources:

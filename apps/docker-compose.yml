@@ -35,5 +35,4 @@ services:
       - "traefik.http.routers.openclaw.entrypoints=websecure"
       - "traefik.http.routers.openclaw.tls.certresolver=letsencrypt"
       - "traefik.http.services.openclaw.loadbalancer.server.port=3000"
-    ports:
-      - "3001:3000"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS

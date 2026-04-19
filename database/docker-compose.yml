@@ -26,10 +26,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - "5432:5432"
+    # ports removidas para segurança - acesso apenas interno
 
-  # --- CACHE & MESSAGE BROKER ---
+    # --- CACHE & MESSAGE BROKER ---
   redis:
     image: redis:7-alpine
     container_name: redis
@@ -44,9 +43,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - "6379:6379"
-  # --- NOSQL DATABASE ---
+    # ports removidas para segurança - acesso apenas interno
+    # --- NOSQL DATABASE ---
   mongodb:
     image: mongo:7-jammy
     container_name: mongodb
@@ -65,5 +63,4 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - "27017:27017"
+    # ports removidas para segurança - acesso apenas interno

@@ -1,9 +1,9 @@
 # -- NETWORK --
 networks:
   public_net:
-    driver: bridge
+    external: true
   internal_net:
-    driver: bridge
+    external: true
 
 services:
   # --- REVERSE PROXY ---

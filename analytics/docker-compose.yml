@@ -35,5 +35,4 @@ services:
       - "traefik.http.routers.metabase.entrypoints=websecure"
       - "traefik.http.routers.metabase.tls.certresolver=letsencrypt"
       - "traefik.http.services.metabase.loadbalancer.server.port=3000"
-    ports:
-      - "3000:3000"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS

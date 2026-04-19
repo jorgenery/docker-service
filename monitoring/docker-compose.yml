@@ -29,15 +29,13 @@ services:
       - "traefik.http.routers.prometheus.entrypoints=websecure"
       - "traefik.http.routers.prometheus.tls.certresolver=letsencrypt"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-    ports:
-      - "9090:9090"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS
 
-  # --- DATABASE DE LOGS ---
+    # --- DATABASE DE LOGS ---
   loki:
     image: grafana/loki:latest
     container_name: loki
-    ports:
-      - "3100:3100"
+    # ports removidas para segurança - acesso apenas via rede interna
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - internal_net

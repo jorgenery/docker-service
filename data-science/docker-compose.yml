@@ -34,10 +34,9 @@ services:
       - "traefik.http.routers.jupyterlab.entrypoints=websecure"
       - "traefik.http.routers.jupyterlab.tls.certresolver=letsencrypt"
       - "traefik.http.services.jupyterlab.loadbalancer.server.port=8888"
-    ports:
-      - "8888:8888"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS
 
-  # --- WORKFLOW ORCHESTRATION ---
+    # --- WORKFLOW ORCHESTRATION ---
   airflow-webserver:
     image: apache/airflow:2.8.1-python3.11
     container_name: airflow-webserver
@@ -67,8 +66,7 @@ services:
       - "traefik.http.routers.airflow.entrypoints=websecure"
       - "traefik.http.routers.airflow.tls.certresolver=letsencrypt"
       - "traefik.http.services.airflow.loadbalancer.server.port=8080"
-    ports:
-      - "8080:8080"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS
     command: webserver
 
   airflow-scheduler:

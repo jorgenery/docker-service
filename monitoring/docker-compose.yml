@@ -21,15 +21,8 @@ services:
       - "--storage.tsdb.retention.time=200h"
       - "--web.enable-lifecycle"
     networks:
-      - public_net
       - internal_net
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMINIO}`)"
-      - "traefik.http.routers.prometheus.entrypoints=websecure"
-      - "traefik.http.routers.prometheus.tls.certresolver=letsencrypt"
-      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-    # ports removidas para segurança - acesso apenas via Traefik HTTPS
+    # Acesso apenas interno - Prometheus não exposto via Traefik
 
     # --- DATABASE DE LOGS ---
   loki:

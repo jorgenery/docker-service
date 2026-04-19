@@ -161,16 +161,30 @@ docker-compose -f core/docker-compose.yml restart portainer
 
 ## 🌐 Acessar Serviços
 
-| Serviço | URL | Porta |
-|---------|-----|-------|
-| **Traefik** | https://painel.datareview.com.br | 80, 443 |
-| **Portainer** | https://portainer.datareview.com.br | 9000 |
-| **Grafana** | https://monitor.datareview.com.br | 3000 |
-| **n8n** | https://n8n.datareview.com.br | 5678 |
-| **Metabase** | https://metabase.datareview.com.br | 3000 |
-| **Ollama** | http://localhost:11434 | 11434 |
-| **PostgreSQL** | localhost:5432 | 5432 |
-| **Redis** | localhost:6379 | 6379 |
+### Serviços Públicos (via Traefik HTTPS)
+
+| Serviço | URL | Acesso |
+|---------|-----|--------|
+| **Traefik** | https://painel.datareview.com.br | HTTPS via Traefik |
+| **Portainer** | https://portainer.datareview.com.br | HTTPS via Traefik |
+| **Grafana** | https://grafana.datareview.com.br | HTTPS via Traefik |
+| **n8n** | https://n8n.datareview.com.br | HTTPS via Traefik |
+| **Metabase** | https://metabase.datareview.com.br | HTTPS via Traefik |
+| **JupyterLab** | https://jupyter.datareview.com.br | HTTPS via Traefik |
+| **Airflow** | https://airflow.datareview.com.br | HTTPS via Traefik |
+| **Landing Page** | https://datareview.com.br | HTTPS via Traefik |
+
+### Serviços Internos (Rede Docker - Sem Acesso Externo)
+
+| Serviço | Acesso Interno | Porta Externa |
+|---------|------------------|----------------|
+| **PostgreSQL** | Rede interna (postgresql:5432) | ❌ Sem acesso externo |
+| **Redis** | Rede interna (redis:6379) | ❌ Sem acesso externo |
+| **MongoDB** | Rede interna (mongodb:27017) | ❌ Sem acesso externo |
+| **Ollama** | Rede interna (ollama:11434) | ❌ Sem acesso externo |
+| **Loki** | Rede interna (loki:3100) | ❌ Sem acesso externo |
+| **Prometheus** | Rede interna (prometheus:9090) | ❌ Sem acesso externo |
+| **OpenClaw** | Rede interna (openclaw:3000) | ❌ Sem acesso externo |
 
 ## 🐳 Containers Disponíveis
 
@@ -207,10 +221,26 @@ Existem duas redes internas:
 
 ## 🔒 Segurança
 
+### Acesso via Traefik (Recomendado)
+Todos os serviços públicos (n8n, Metabase, Grafana, Airflow, JupyterLab, OpenClaw, etc.) são acessíveis **apenas via Traefik HTTPS**, oferecendo:
+- ✅ **Criptografia HTTPS automática** via Let's Encrypt
+- ✅ **Proxy reverso centralizado** com controle de acesso
+- ✅ **Sem exposição de portas diretas** da aplicação
+- ✅ **Certificados SSL/TLS válidos** para todos os domínios
+
+### Bancos de Dados Isolados
+Serviços críticos (PostgreSQL, Redis, MongoDB, Ollama, Loki) estão isolados na rede interna:
+- ✅ **Sem acesso externo** - apenas acessíveis dentro da rede Docker
+- ✅ **Comunicação interna protegida** entre containers
+- ✅ **Segurança em profundidade** com múltiplas camadas
+
+### Boas Práticas Implementadas
 1. **Senhas Padrão**: Altere todas as senhas em `.env`
 2. **SSL/TLS**: Configurado automaticamente via Let's Encrypt
-3. **Acesso**: Serviços internos não expostos na internet
-4. **Backups**: Configure backups do PostgreSQL regularmente
+3. **Acesso Controlado**: Serviços internos completamente isolados
+4. **Rede Segregada**: `public_net` para Traefik e `internal_net` para serviços internos
+5. **Backups**: Configure backups do PostgreSQL regularmente
+6. **Monitoramento**: Use Grafana/Prometheus para observabilidade
 
 ## 🆘 Troubleshooting
 

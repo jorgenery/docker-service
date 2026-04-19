@@ -26,13 +26,5 @@ services:
     volumes:
       - ./data/openclaw:/app/data
     networks:
-      - public_net
       - internal_net
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.openclaw.rule=Host(`${OPENCLAW_HOST:-openclaw.exa\
-        mple.com}`)"
-      - "traefik.http.routers.openclaw.entrypoints=websecure"
-      - "traefik.http.routers.openclaw.tls.certresolver=letsencrypt"
-      - "traefik.http.services.openclaw.loadbalancer.server.port=3000"
-    # ports removidas para segurança - acesso apenas via Traefik HTTPS
+    # Acesso apenas interno - OpenClaw não exposto via Traefik

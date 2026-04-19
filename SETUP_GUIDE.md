@@ -97,7 +97,7 @@ Se for usar em produção com domínio real:
 
 4. Adicione registros específicos:
    ```
-   painel        → seu-ip
+   portainer     → seu-ip
    n8n           → seu-ip
    metabase      → seu-ip
    monitor       → seu-ip
@@ -222,7 +222,7 @@ curl -i -H "Host: n8n.datareview.com.br" https://datareview.com.br
 ## Passo 9: Configurar Aplicações
 
 ### Portainer
-1. Acessar: `https://painel.datareview.com.br`
+1. Acessar: `https://portainer.datareview.com.br`
 2. Criar usuário admin na primeira execução
 3. Conectar ao Docker daemon local
 

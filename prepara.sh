@@ -46,6 +46,71 @@ mkdir -p ./database/backups
 # PERMISSÕES
 # ========================================
 echo "🔒 Configurando permissões..."
+chmod 755 ./*.sh
+
+# ========================================
+# BUILD DE IMAGENS
+# ========================================
+echo "🔨 Reconstruindo imagens Docker..."
+
+# Função para fazer build de imagens custom
+build_images() {
+  echo "📦 Puxando imagens do registro..."
+  
+  # Core services
+  docker pull traefik:v3.6 || echo "⚠️  Falha ao puxar traefik:v3.6"
+  docker pull portainer/portainer-ce:latest || echo "⚠️  Falha ao puxar portainer"
+  
+  # Database services
+  docker pull postgres:16-alpine || echo "⚠️  Falha ao puxar postgres:16-alpine"
+  docker pull mongo:7-jammy || echo "⚠️  Falha ao puxar mongo:7-jammy"
+  docker pull redis:7-alpine || echo "⚠️  Falha ao puxar redis:7-alpine"
+  
+  # Automation services
+  docker pull n8nio/n8n:latest || echo "⚠️  Falha ao puxar n8n"
+  
+  # Analytics services
+  docker pull metabase/metabase:latest || echo "⚠️  Falha ao puxar metabase"
+  
+  # AI services
+  docker pull ollama/ollama:latest || echo "⚠️  Falha ao puxar ollama"
+  
+  # Data Science services
+  docker pull jupyter/datascience-notebook:latest || echo "⚠️  Falha ao puxar jupyterlab"
+  docker pull apache/airflow:2.8.1-python3.11 || echo "⚠️  Falha ao puxar airflow"
+  
+  # Monitoring services
+  docker pull prom/prometheus:latest || echo "⚠️  Falha ao puxar prometheus"
+  docker pull grafana/grafana:latest || echo "⚠️  Falha ao puxar grafana"
+  docker pull grafana/loki:latest || echo "⚠️  Falha ao puxar loki"
+  docker pull grafana/promtail:latest || echo "⚠️  Falha ao puxar promtail"
+  docker pull gcr.io/cadvisor/cadvisor:latest || echo "⚠️  Falha ao puxar cadvisor"
+  
+  # Apps services
+  docker pull nginx:alpine || echo "⚠️  Falha ao puxar nginx"
+  docker pull alpine/openclaw:latest || echo "⚠️  Falha ao puxar openclaw"
+  
+  echo "✅ Imagens atualizadas com sucesso!"
+}
+
+# Reconstrói imagens custom se houver Dockerfiles
+build_custom_images() {
+  if [ -f "./apps/Dockerfile" ]; then
+    echo "🔨 Construindo imagem custom: apps"
+    docker build -t docker-service/apps:latest ./apps || echo "⚠️  Falha ao construir apps"
+  fi
+  
+  if [ -f "./landing-page/Dockerfile" ]; then
+    echo "🔨 Construindo imagem custom: landing-page"
+    docker build -t docker-service/landing-page:latest ./landing-page || echo "⚠️  Falha ao construir landing-page"
+  fi
+}
+
+# Executa build
+build_images
+build_custom_images
+
+echo "✨ Build de imagens concluído!"
 
 # Traefik ACME
 touch ./core/proxy/acme.json

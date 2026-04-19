@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     environment:
       MB_DB_TYPE: postgres
-      MB_DB_DBNAME: ${POSTGRES_DB:-metabase}
+      MB_DB_DBNAME: ${METABASE_DB_NAME:-metabase}
       MB_DB_PORT: 5432
       MB_DB_USER: ${POSTGRES_USER:-postgres}
       MB_DB_PASS: ${POSTGRES_PASSWORD:-postgres}

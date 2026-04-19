@@ -15,7 +15,7 @@ services:
     environment:
       DB_HOST: postgresql
       DB_PORT: 5432
-      DB_NAME: ${POSTGRES_DB:-openclaw}
+      DB_NAME: ${OPENCLAW_DB_NAME:-openclaw}
       DB_USER: ${POSTGRES_USER:-postgres}
       DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       REDIS_HOST: redis

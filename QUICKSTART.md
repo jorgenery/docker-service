@@ -23,7 +23,7 @@ Após ~2-3 minutos:
 
 | Serviço | URL | Login |
 |---------|-----|-------|
-| Portainer | https://painel.datareview.com.br | Criar na primeira vez |
+| Portainer | https://portainer.datareview.com.br | Criar na primeira vez |
 | Grafana | https://monitor.datareview.com.br | admin / grafana123 |
 | n8n | https://n8n.datareview.com.br | Criar na primeira vez |
 | Metabase | https://metabase.datareview.com.br | admin@... / (do .env) |

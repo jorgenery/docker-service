@@ -156,7 +156,7 @@ bash status.sh             # Ou: make status
 
 ### 5️⃣ Acessar Serviços
 ```
-https://painel.datareview.com.br      (Portainer)
+https://portainer.datareview.com.br      (Portainer)
 https://monitor.datareview.com.br     (Grafana)
 https://n8n.datareview.com.br         (n8n)
 https://metabase.datareview.com.br    (Metabase)

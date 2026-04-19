@@ -164,7 +164,7 @@ docker-compose -f core/docker-compose.yml restart portainer
 | Serviço | URL | Porta |
 |---------|-----|-------|
 | **Traefik** | https://painel.datareview.com.br | 80, 443 |
-| **Portainer** | https://painel.datareview.com.br | 9000 |
+| **Portainer** | https://portainer.datareview.com.br | 9000 |
 | **Grafana** | https://monitor.datareview.com.br | 3000 |
 | **n8n** | https://n8n.datareview.com.br | 5678 |
 | **Metabase** | https://metabase.datareview.com.br | 3000 |

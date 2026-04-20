@@ -17,7 +17,8 @@ services:
       - public_net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.landing.rule=Host(`${DOMINIO:-datareview.com.br}`)"
+      - "traefik.http.routers.landing.rule=Host(`www.${DOMINIO:-www.datareview.\
+        com.br}`)"
       - "traefik.http.routers.landing.entrypoints=websecure"
       - "traefik.http.routers.landing.tls.certresolver=letsencrypt"
       - "traefik.http.services.landing.loadbalancer.server.port=80"

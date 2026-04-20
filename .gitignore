@@ -16,6 +16,7 @@ apps/data/*
 monitoring/data/*
 core/data/portainer/*
 core/proxy/acme.json
+acme.json
 
 # Backups
 database/backups/*.sql

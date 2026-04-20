@@ -67,7 +67,7 @@ services:
       - "traefik.http.routers.airflow.tls.certresolver=letsencrypt"
       - "traefik.http.services.airflow.loadbalancer.server.port=8080"
     # ports removidas para segurança - acesso apenas via Traefik HTTPS
-    command: webserver
+    command: bash -c "airflow db init && airflow webserver"
 
   airflow-scheduler:
     image: apache/airflow:2.8.1-python3.11

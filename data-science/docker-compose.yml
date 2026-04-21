@@ -22,7 +22,7 @@ services:
     volumes:
       - ./data/jupyter:/home/jovyan/work
       # Acesso às DAGs do Airflow
-      - ../data-science/data/airflow/dags:/home/jovyan/airflow-dags:ro
+      - ../data-science/data/airflow/dags:/home/jovyan/airflow-dags:rw
       - ../data-science/data/airflow/logs:/home/jovyan/airflow-logs:ro
     networks:
       - public_net

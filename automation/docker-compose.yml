@@ -18,9 +18,11 @@ services:
       - N8N_PROTOCOL=https
       - N8N_SECURE_COOKIE=true
       - NODE_ENV=production
+      - WEBHOOK_URL=https://${N8N_HOST:-n8n.datareview.com.br}/
       - WEBHOOK_TUNNEL_URL=https://${N8N_HOST:-n8n.datareview.com.br}/
       - N8N_EDITOR_BASE_URL=https://${N8N_HOST:-n8n.datareview.com.br}/
       - N8N_REDIRECT_LOGOUT_URL=https://${N8N_HOST:-n8n.datareview.com.br}/
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgresql
       - DB_POSTGRESDB_PORT=5432

@@ -1,0 +1,41 @@
+version: "3.8"
+
+networks:
+  public_net:
+    external: true
+  internal_net:
+    external: true
+
+services:
+  # --- IDENTITY & ACCESS MANAGEMENT (SSO) ---
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    container_name: keycloak
+    restart: unless-stopped
+    command: start
+    environment:
+      # Banco de dados (PostgreSQL compartilhado)
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgresql:5432/${KEYCLOAK_DB_NAME:-keycloak}
+      KC_DB_USERNAME: ${POSTGRES_USER:-postgres}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      # Usuário administrador inicial (bootstrap)
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak@6379}
+      # Hostname / proxy (atrás do Traefik com TLS)
+      KC_HOSTNAME: ${KEYCLOAK_HOST:-keycloak.datareview.com.br}
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      TZ: America/Sao_Paulo
+    networks:
+      - public_net
+      - internal_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=Host(`${KEYCLOAK_HOST:-keycloak.datareview.com.br}`)"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.tls.certresolver=letsencrypt"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
+    # ports removidas para segurança - acesso apenas via Traefik HTTPS

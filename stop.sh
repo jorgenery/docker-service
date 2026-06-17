@@ -37,6 +37,7 @@ stop_service "Analytics (Metabase)" "analytics/docker-compose.yml"
 stop_service "Automation (n8n)" "automation/docker-compose.yml"
 stop_service "Landing Page" "landing-page/docker-compose.yml"
 stop_service "Monitoring (Prometheus + Grafana + Loki)" "monitoring/docker-compose.yml"
+stop_service "Identity (Keycloak)" "identity/docker-compose.yml"
 stop_service "Database (PostgreSQL + Redis + MongoDB)" "database/docker-compose.yml"
 stop_service "Core (Traefik + Portainer)" "core/docker-compose.yml"
 

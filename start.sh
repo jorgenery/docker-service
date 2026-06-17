@@ -54,32 +54,36 @@ echo -e "${YELLOW}2️⃣  Iniciando Database (PostgreSQL + Redis + MongoDB)...$
 docker-compose --env-file .env -f database/docker-compose.yml up -d $BUILD_FLAG
 sleep 10
 
-# 3. Monitoring (Prometheus + Loki + Promtail + Grafana + Node Exporter + cAdvisor)
-echo -e "${YELLOW}3️⃣  Iniciando Monitoring (Prometheus + Loki + Promtail + Grafana)...${NC}"
+# 3. Identity (Keycloak)
+echo -e "${YELLOW}3️⃣  Iniciando Identity (Keycloak)...${NC}"
+docker-compose --env-file .env -f identity/docker-compose.yml up -d $BUILD_FLAG
+
+# 4. Monitoring (Prometheus + Loki + Promtail + Grafana + Node Exporter + cAdvisor)
+echo -e "${YELLOW}4️⃣  Iniciando Monitoring (Prometheus + Loki + Promtail + Grafana)...${NC}"
 docker-compose --env-file .env -f monitoring/docker-compose.yml up -d $BUILD_FLAG
 
-# 4. Landing Page
-echo -e "${YELLOW}4️⃣  Iniciando Landing Page...${NC}"
+# 5. Landing Page
+echo -e "${YELLOW}5️⃣  Iniciando Landing Page...${NC}"
 docker-compose --env-file .env -f landing-page/docker-compose.yml up -d $BUILD_FLAG
 
-# 5. Automation (n8n)
-echo -e "${YELLOW}5️⃣  Iniciando Automation (n8n)...${NC}"
+# 6. Automation (n8n)
+echo -e "${YELLOW}6️⃣  Iniciando Automation (n8n)...${NC}"
 docker-compose --env-file .env -f automation/docker-compose.yml up -d $BUILD_FLAG
 
-# 6. Analytics (Metabase)
-echo -e "${YELLOW}6️⃣  Iniciando Analytics (Metabase)...${NC}"
+# 7. Analytics (Metabase)
+echo -e "${YELLOW}7️⃣  Iniciando Analytics (Metabase)...${NC}"
 docker-compose --env-file .env -f analytics/docker-compose.yml up -d $BUILD_FLAG
 
-# 7. AI (Ollama)
-echo -e "${YELLOW}7️⃣  Iniciando AI (Ollama)...${NC}"
+# 8. AI (Ollama)
+echo -e "${YELLOW}8️⃣  Iniciando AI (Ollama)...${NC}"
 docker-compose --env-file .env -f ai/docker-compose.yml up -d $BUILD_FLAG
 
-# 8. Apps (OpenClaw)
-echo -e "${YELLOW}8️⃣  Iniciando Apps (OpenClaw)...${NC}"
+# 9. Apps (OpenClaw)
+echo -e "${YELLOW}9️⃣  Iniciando Apps (OpenClaw)...${NC}"
 docker-compose --env-file .env -f apps/docker-compose.yml up -d $BUILD_FLAG
 
-# 9. Data Science (JupyterLab + Airflow)
-echo -e "${YELLOW}9️⃣  Iniciando Data Science (JupyterLab + Airflow)...${NC}"
+# 10. Data Science (JupyterLab + Airflow)
+echo -e "${YELLOW}🔟 Iniciando Data Science (JupyterLab + Airflow)...${NC}"
 docker-compose --env-file .env -f data-science/docker-compose.yml up -d $BUILD_FLAG
 
 echo ""
@@ -91,6 +95,7 @@ echo ""
 echo "🌐 URLs de acesso (após configurar domínios):"
 echo "   - Landing:   https://${DOMINIO}"
 echo "   - Portainer: https://portainer.${DOMINIO}"
+echo "   - Keycloak:  https://${KEYCLOAK_HOST:-keycloak.${DOMINIO}}"
 echo "   - Grafana:   https://grafana.${DOMINIO}"
 echo "   - Prometheus: https://prometheus.${DOMINIO}"
 echo "   - n8n:       https://${N8N_HOST}"

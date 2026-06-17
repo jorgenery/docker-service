@@ -18,6 +18,7 @@ networks:
 # docker-compose -f docker-compose.yml \
 #   -f core/docker-compose.yml \
 #   -f database/docker-compose.yml \
+#   -f identity/docker-compose.yml \
 #   -f automation/docker-compose.yml \
 #   -f analytics/docker-compose.yml \
 #   -f ai/docker-compose.yml \

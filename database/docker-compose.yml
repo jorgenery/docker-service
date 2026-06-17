@@ -64,3 +64,17 @@ services:
       timeout: 5s
       retries: 5
     # ports removidas para segurança - acesso apenas interno
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    restart: always
+    volumes:
+      - ./qdrant_data:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__API_KEY=${QDRANT_API_KEY:-qdrant@6379} # Recomendado para segurança
+    labels:
+      - "traefik.enable=false"
+      - "traefik.http.routers.qdrant.rule=Host(`qdrant.${DOMINIO}`)"
+      - "traefik.http.routers.qdrant.entrypoints=websecure"
+      - "traefik.http.routers.qdrant.tls.certresolver=meu-resolver"
+      - "traefik.http.services.qdrant.loadbalancer.server.port=6333"

@@ -19,6 +19,10 @@ GRANT ALL PRIVILEGES ON DATABASE openclaw TO postgres;
 CREATE DATABASE airflow;
 GRANT ALL PRIVILEGES ON DATABASE airflow TO postgres;
 
+-- Criar database para Keycloak
+CREATE DATABASE keycloak;
+GRANT ALL PRIVILEGES ON DATABASE keycloak TO postgres;
+
 -- Criar database principal
 CREATE DATABASE maindb;
 GRANT ALL PRIVILEGES ON DATABASE maindb TO postgres;

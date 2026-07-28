@@ -86,6 +86,10 @@ docker-compose --env-file .env -f apps/docker-compose.yml up -d $BUILD_FLAG
 echo -e "${YELLOW}🔟 Iniciando Data Science (JupyterLab + Airflow)...${NC}"
 docker-compose --env-file .env -f data-science/docker-compose.yml up -d $BUILD_FLAG
 
+# 11. Remote Support (RustDesk)
+echo -e "${YELLOW}1️⃣1️⃣  Iniciando Remote Support (RustDesk)...${NC}"
+docker-compose --env-file .env -f remote-support/docker-compose.yml up -d $BUILD_FLAG
+
 echo ""
 echo -e "${GREEN}✅ Todos os containers foram iniciados!${NC}"
 echo ""

@@ -25,6 +25,7 @@ services:
       TZ: America/Sao_Paulo
     volumes:
       - ./data/openclaw:/app/data
+      - ./data/openclaw_home:/home/node/.openclaw
     networks:
       - internal_net
     # Acesso apenas interno - OpenClaw não exposto via Traefik

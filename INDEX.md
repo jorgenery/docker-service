@@ -121,7 +121,13 @@ docker-service/
 - ✅ **Ollama** - LLM local
 
 ### Aplicações (Apps)
-- ✅ **OpenClaw** - Seu app customizado
+- ✅ **OpenClaw** - Seu app customizado (openclaw agents add main)
+- openclaw config set defaultModel "ollama/mistral"
+- openclaw config set channels.telegram.groupAllowFrom '["SEU_TELEGRAM_USER_ID"]'
+- openclaw pairing list
+- openclaw pairing approve 344711698
+- openclaw pairing approve telegram 9A6YEHXJ
+- openclaw config set gateway.trustedProxies '["172.19.0.1", "172.19.0.2", "172.19.0.14", "172.19.0.17", "127.0.0.1"]'
 
 ### Observabilidade (Monitoring)
 - ✅ **Loki** - Armazenamento de logs
